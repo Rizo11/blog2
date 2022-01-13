@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - blog2</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+     <link rel="stylesheet" href="~/intro.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/quilljs/quill.snow.css"/>
+    <link rel="stylesheet" href="~/lib/quilljs/quill.bubble.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" />
+</head>
+<body>
+    @Html.Partial("_HeaderPartial")
+    @* @Html.Partial("_SwitchPartial") *@
+    @RenderBody()
+    
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/lib/quilljs/quill.min.js" ></script>
+    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

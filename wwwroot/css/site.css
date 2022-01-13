@@ -1,0 +1,18 @@
+.logo-light-shadow
+{
+  filter: drop-shadow(px, 5px, 5px rgba(200, 0, 117, 0.4));
+}
+
+/* #title-editor
+{
+  font-size:1.5rem;
+} */
+
+#post-title{
+  font-size: 32px;
+  text-overflow: inherit;
+}
+
+#post-title:focus{
+  outline: none;
+}

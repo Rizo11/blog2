@@ -1,0 +1,46 @@
+@using Microsoft.AspNetCore
+@model blog2.Entities.Blog;
+
+  <div class="container my-5">
+
+    <div class="d-inline mx-2">
+      <h2 class="bg-light">@Model.Title</h2>
+      <a class="btn btn-outline-primary" href="/Edit/@Model.Id">Edit</a>
+    </div>
+    <span class="text-muted" >@Model.CreatedAt</span>
+    @if(Model.CreatedAt != Model.ModifiedAt)
+    {
+      <span class="text-muted" >Edited</span>
+    }
+    @Html.Raw(Model.Content)
+  </div>
+
+
+
+@* @if (Model.Blogs == null || Model.Blogs.Count() < 1)
+{
+    <div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">No posts ☹️</h4>
+    <p>There are no posts yet. Please write one or come again some other time!</p>
+    <hr>
+    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+</div>
+}
+else
+{
+    @foreach (var item in Model.Blogs)
+    {
+        <div class="container my-5">
+            <div class="d-inline mx-2">
+                <h2 class="bg-light">@item.Title</h2>
+                <a class="btn btn-outline-primary" href="/edit/@item.">Edit</a>
+            </div>
+        </div>
+        <span class="text-muted">@item.CreatedAt</span>
+        @if (@item.CreatedAt != item.ModifiedAt)
+        {
+            <span class="text-muted">Edited</span>
+        }
+        @Html.Raw(item.Content)
+    }
+} *@
