@@ -16328,8 +16328,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Account/Login.cshtml",
+      "TargetPath": "Views\\Account\\Login.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Home/Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Account/Register.cshtml",
+      "TargetPath": "Views\\Account\\Register.cshtml",
       "FileKind": "mvc"
     },
     {
