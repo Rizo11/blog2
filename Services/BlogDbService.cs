@@ -1,6 +1,6 @@
 using blog2.Entities;
 using Microsoft.EntityFrameworkCore;
-using mvc6.Data;
+using blog2.Data;
 
 namespace blog2.Services;
 
@@ -14,47 +14,64 @@ public class BlogDbService : IBlogDbService
         _logger = logger;
         _dataBase = blogDb;
     }
-    public Task<bool> ExistsBlogAsync(Guid id)
+    public Task<bool> ExistsPostAsync(Guid id)
         => _dataBase.BlogsDb.AnyAsync(x => x.Id == id);
 
-    public Task<List<Blog>> GetAllBlogsAsync()
+    public Task<List<Post>> GetAllPostsAsync()
         => _dataBase.BlogsDb.ToListAsync();
 
-    public Task<Blog> GetBlogByIdAsync(Guid id)
+    public Task<Post> GetPostByIdAsync(Guid id)
         => _dataBase.BlogsDb.FirstOrDefaultAsync(x => x.Id == id);
 
-    public async Task<(bool IsSuccess, Exception Exception)> PostBlogAsync(Blog blog)
+    public async Task<(bool IsSuccess, Exception Exception)> CreatePostAsync(Post post)
     {
         try
         {
-            await _dataBase.BlogsDb.AddAsync(blog);
+            await _dataBase.BlogsDb.AddAsync(post);
             await _dataBase.SaveChangesAsync();
-            _logger.LogInformation($"New blog was added, ID = {blog.Id}");
+            _logger.LogInformation($"New post was added, ID = {post.Id}");
             return (true, null);
         }
         catch (Exception e)
         {
-            _logger.LogError($"FAILED to add blog with id = {blog.Id} to the DB");
+            _logger.LogError($"FAILED to add post with id = {post.Id} to the DB");
             return (false, e);
         }
     }
 
-    public async Task<(bool IsSuccess, Exception Exception)> UpdateBlogAsync(Blog blog)
+    public async Task<(bool IsSuccess, Exception Exception)> UpdatePostAsync(Post post)
     {
         try
         {
 
-            _dataBase.BlogsDb.Update(blog);
+            _dataBase.BlogsDb.Update(post);
             await _dataBase.SaveChangesAsync();
-            _logger.LogInformation($"Blog {blog.Id} was updated succesfully...");
+            _logger.LogInformation($"Post {post.Id} was updated succesfully...");
             return (true, null);
         }
         catch (Exception e)
         {
-            _logger.LogError($"Error in updating blog, id={blog.Id}...", e.Message);
+            _logger.LogError($"Error in updating post, id={post.Id}...", e.Message);
 
             return (false, e);
         }
     }
 
+    public async Task<(bool IsSuccess, Exception Exception)> DeletePostAsync(Post post)
+    {
+        try
+        {
+
+            _dataBase.BlogsDb.Remove(post);
+            await _dataBase.SaveChangesAsync();
+            _logger.LogInformation($"Post {post.Id} was deleted succesfully...");
+            return (true, null);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"Error in deleting post, id={post.Id}...", e.Message);
+
+            return (false, e);
+        }
+    }
 }

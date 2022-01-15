@@ -19,58 +19,62 @@ public class WriteController : Controller
     }
 
 
-    [HttpGet("Write")]
+    [HttpGet("write")]
     public IActionResult Write()
     {
         return View();
     }
 
 
-    [HttpPost("Write")]
-    public async Task<IActionResult> Write([FromForm]Blog blog)
+    [HttpPost("write")]
+    public async Task<IActionResult> Write([FromForm]PostViewModel model)
     {
-        if(await _blogDbService.ExistsBlogAsync(blog.Id))
-        {
-            var res =await _blogDbService.UpdateBlogAsync(blog);
-            if (res.IsSuccess)
-            {
-                return LocalRedirect($"~/Blogs/{blog.Id}");
-            }
-            return BadRequest(res.Exception.Message);
-        }
-        blog.Id = Guid.NewGuid();
-        blog.CreatedAt = DateTimeOffset.UtcNow;
-        blog.ModifiedAt = blog.CreatedAt;
-        blog.Tags = "a";
-        blog.Comments = "b";
-        blog.Likes = 1;
-        blog.Dislikes = 2;
-        var result = await _blogDbService.PostBlogAsync(blog);
+        var newPost = new Post(model.Title, model.Content);
+        var result = await _blogDbService.CreatePostAsync(newPost);
         if (result.IsSuccess)
         {
-            return LocalRedirect($"~/Blogs/{blog.Id}");
+            return LocalRedirect($"~/post/{newPost.Id}");
         }
 
-        return BadRequest(result.Exception.Message);
-    }
-
-
-    [HttpPost("Edit")]
-    public async Task<IActionResult> Edit(Blog blogEntity)
-    {
-        var result =await _blogDbService.UpdateBlogAsync(blogEntity);
-        if (result.IsSuccess)
-        {
-            return LocalRedirect($"~/Blogs/{blogEntity.Id}");
+        return BadRequest(
+            new {
+            error = result.Exception.Message,
+            status = 400
         }
-        return BadRequest(result.Exception.Message);
+        );
     }
 
-    [HttpGet("edit/{id}")]
-    public async Task<IActionResult> Edit(Guid id)
-    {
-        var blogEntity = await _blogDbService.GetBlogByIdAsync(id);
-        blogEntity.ModifiedAt = DateTimeOffset.UtcNow;
-        return View("Write", blogEntity);
-    }
+
+    // [HttpPost("edit")]
+    // public async Task<IActionResult> Edit(Blog blogEntity)
+    // {
+    //     var blogEntity1 = await _blogDbService.GetBlogByIdAsync(blogEntity.Id);
+    //     var result =await _blogDbService.UpdateBlogAsync(blogEntity1);
+    //     if (result.IsSuccess)
+    //     {
+    //         return LocalRedirect($"~/Blogs/{blogEntity.Id}");
+    //     }
+    //     return BadRequest(result.Exception.Message);
+    // }
+    // [HttpGet("edit")]
+    // public async Task<IActionResult> Edit()
+    // {
+    //     return View();
+    // }
+
+    // [HttpGet("edit/{id}")]
+    // public async Task<IActionResult> Edit(Guid id)
+    // {
+    //     var blogEntity = await _blogDbService.GetBlogByIdAsync(id);
+    //     var result = await _blogDbService.DeleteBlogAsync(blogEntity);
+    //     if(result.IsSuccess)
+    //     {
+    //         return View("Write", blogEntity);
+    //     }
+    //     return BadRequest(
+    //         new {
+    //         error = result.Exception,
+    //         status = 400
+    //     });
+    // }
 }

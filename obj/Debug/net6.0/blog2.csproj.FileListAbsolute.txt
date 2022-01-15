@@ -64,3 +64,4 @@
 /home/mrizo/Desktop/dev/blog2/obj/Debug/net6.0/blog2.MvcApplicationPartsAssemblyInfo.cs
 /home/mrizo/Desktop/dev/blog2/obj/Debug/net6.0/blog2.csproj.CopyComplete
 /home/mrizo/Desktop/dev/blog2/obj/Debug/net6.0/scopedcss/Views/Shared/_SwitchPartial.cshtml.rz.scp.css
+/home/mrizo/Desktop/dev/blog2/bin/Debug/net6.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

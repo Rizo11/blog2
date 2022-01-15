@@ -12,8 +12,8 @@ using blog2.Data;
 namespace blog2.Migrations
 {
     [DbContext(typeof(BlogDb))]
-    [Migration("20220112221911_2Create")]
-    partial class _2Create
+    [Migration("20220114223745_4Create")]
+    partial class _4Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,39 +24,28 @@ namespace blog2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("blog2.Entities.Blog", b =>
+            modelBuilder.Entity("blog2.Entities.Post", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Comments")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("Dislikes")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Dislikes")
+                        .HasColumnType("decimal(20,0)");
 
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Likes")
+                        .HasColumnType("decimal(20,0)");
 
                     b.Property<DateTimeOffset>("ModifiedAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Tags")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

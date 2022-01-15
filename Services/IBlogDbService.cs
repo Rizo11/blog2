@@ -5,12 +5,12 @@ namespace blog2.Services;
 
 public interface IBlogDbService
 {
-    public Task<bool> ExistsBlogAsync(Guid id);
+    public Task<bool> ExistsPostAsync(Guid id);
 
-    public Task<List<Blog>> GetAllBlogsAsync();
+    public Task<List<Post>> GetAllPostsAsync();
 
-    public Task<Blog> GetBlogByIdAsync(Guid id);
-
-    public Task<(bool IsSuccess, Exception Exception)> PostBlogAsync(Blog blog);
-    public Task<(bool IsSuccess, Exception Exception)> UpdateBlogAsync(Blog blog);
+    public Task<Post> GetPostByIdAsync(Guid id);
+    public Task<(bool IsSuccess, Exception Exception)> CreatePostAsync(Post blog);
+    public Task<(bool IsSuccess, Exception Exception)> UpdatePostAsync(Post blog);
+    public Task<(bool IsSuccess, Exception Exception)> DeletePostAsync(Post blog);
 }

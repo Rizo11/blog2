@@ -1,16 +1,29 @@
+using blog2.Data;
+using blog2.Entities;
 using blog2.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using mvc6.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<BlogDb>(options => 
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 6;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<BlogDb>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IBlogDbService, BlogDbService>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<BlogDb>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-    );
 
 var app = builder.Build();
 

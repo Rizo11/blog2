@@ -1,0 +1,47 @@
+@using System.Globalization
+@model List<Post>
+
+@if (Model == null || Model.Count() < 1)
+{
+    <div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">No posts ☹️</h4>
+    <p>There are no posts yet. Please write one or come again some other time!</p>
+    <hr>
+    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+</div>
+}
+else
+{
+    <div class="row mx-4 mt-5">
+    @foreach (var post in Model)
+    {
+        <div class="col-md-6">
+            <div class="row g-0 card rounded shadow overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <div class="d-flex">
+                        @* @if(post.Tags.ToString().Split(',').ToList()?.Count() > 0)
+                        {
+                            foreach(var tag in post.Tags.ToString().Split(',').ToList())
+                            {
+                                <span class="badge bg-info text-light mx-1">Info</span>
+
+                            }
+                        } *@
+                    </div>
+                    <h3 class="mb-0">@post.Title</h3>
+                    <div class="d-flex">
+                        <div class="mb-1 text-muted">CreatedAt @post.CreatedAt.ToString("MMM dd, yyyy")/</div>
+                        <div class="mb-1 text-muted">ModifiedAt @post.ModifiedAt.ToString("MMM dd, yyyy")</div>
+                        <i class="far fa-thumbs-up ms-auto"> Likes @post.Likes</i>
+                        <i class="far fa-thumbs-up ms-auto"> Dislikes @post.Likes</i>   
+                    </div>
+                    <a href="/post/@post.Id" class="stretched-link">Read</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="~/DevPen.png" width="200" height="250">
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+}

@@ -3,7 +3,7 @@ using blog2.Entities;
 
 namespace blog2.ViewModels;
 
-public class BlogsViewModel
+public class PostsViewModel
 {
-    public List<Blog> Blogs { get; set; }
+    public List<Post> Posts { get; set; }
 }

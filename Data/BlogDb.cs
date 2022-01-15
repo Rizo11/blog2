@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using blog2.Entities;
 
-namespace mvc6.Data;
+namespace blog2.Data;
 
-public class BlogDb: DbContext
+public class BlogDb: IdentityDbContext<User>
 {
-    public DbSet<Blog> BlogsDb { get; set; }
+    public DbSet<Post> BlogsDb { get; set; }
     public BlogDb( DbContextOptions options)
-    :base(options){  }
-
-    
+        :base(options){ }
+ 
 }
