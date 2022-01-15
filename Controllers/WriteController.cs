@@ -5,6 +5,7 @@ using blog2.Models;
 using blog2.ViewModels;
 using blog2.Services;
 using blog2.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace blog2.Controllers;
 
@@ -18,14 +19,14 @@ public class WriteController : Controller
         _logger = logger;
     }
 
-
+    [Authorize]
     [HttpGet("write")]
     public IActionResult Write()
     {
         return View();
     }
 
-
+    [Authorize]
     [HttpPost("write")]
     public async Task<IActionResult> Write([FromForm]PostViewModel model)
     {

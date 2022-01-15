@@ -45,4 +45,24 @@ public class AccountController: Controller
         }
         return BadRequest(JsonSerializer.Serialize(result.Errors));
     }
+
+    [HttpGet]
+    public IActionResult Login(string returnUrl)
+    {
+        return View(new LoginViewModel() {ReturnUrl = returnUrl});
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginViewModel model)
+    {
+        var user = await _userM.FindByEmailAsync(model.Email);
+        if(user != null)
+        {
+            await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+            //suggested to read about isPersistant
+            return LocalRedirect($"{model.ReturnUrl ?? "/"}");
+        }
+
+        return BadRequest("Wrong credentials");
+    }
 }
