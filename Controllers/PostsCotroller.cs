@@ -1,9 +1,10 @@
-using System.Text;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using blog2.Models;
 using blog2.ViewModels;
 using blog2.Services;
+using Microsoft.AspNetCore.Identity;
+using blog2.Entities;
+using blog2.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace blog2.Controllers;
 
@@ -11,25 +12,46 @@ public class PostsController : Controller
 {
 
     private readonly ILogger<PostsController> _logger;
-    private readonly IBlogDbService _blogDbService;
-    public PostsController(IBlogDbService blogDbService, ILogger<PostsController> logger)
+    private readonly BlogDb _blogDb;
+    private readonly UserManager<User> _userM;
+    public PostsController(ILogger<PostsController> logger, BlogDb blogDb, UserManager<User> userManager)
     {
-        _blogDbService = blogDbService;
         _logger = logger;
+        _blogDb = blogDb;
+        _userM = userManager;
     }
 
 
     [HttpGet("posts")]  
     public async Task<IActionResult> GetAllPosts()
     {
-        var posts = await _blogDbService.GetAllPostsAsync();
-        return View(posts);
+        return View(new PostsViewModel()
+        {
+            Posts = await _blogDb.BlogsDb.Select(p => new PostViewModel()
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Content = p.Content,
+                Edited = p.Edited,
+                Likes = p.Likes,
+                Dislikes = p.Dislikes,
+                CreatedAt = p.CreatedAt,
+                ModifiedAt = p.ModifiedAt,
+                Author = p.CreatedBy.ToString()
+            })
+            .ToListAsync()
+        });
+
+
+        // var posts =await _blogDbService.GetAllPostsAsync();
+        // PostsViewModel ret = await toPostsViewModelAsync(posts);
+        // return View(ret);
     }
 
     [HttpGet("post/{id}")]
     public async Task<IActionResult> Post(Guid Id)
     {
-        var post = await _blogDbService.GetPostByIdAsync(Id);
+        var post = await _blogDb.BlogsDb.FirstOrDefaultAsync(p => p.Id == Id);
         var model = new PostViewModel()
         {
             Id = post.Id,
@@ -40,9 +62,7 @@ public class PostsController : Controller
             Dislikes = post.Dislikes,
             CreatedAt = post.CreatedAt,
             ModifiedAt = post.ModifiedAt,
-            // Author = "name of the Author",
-            // Tags = post.Comments.ToString().Split(',').ToList(),
-            // Comments = post.Comments.ToString().Split(',').ToList()
+            Author = post.CreatedBy.ToString()
         };
         return View(model);
     }

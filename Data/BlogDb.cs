@@ -7,7 +7,7 @@ namespace blog2.Data;
 public class BlogDb: IdentityDbContext<User>
 {
     public DbSet<Post> BlogsDb { get; set; }
-    public BlogDb( DbContextOptions options)
+    public BlogDb( DbContextOptions<BlogDb> options)
         :base(options){ }
  
 }

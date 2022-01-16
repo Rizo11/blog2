@@ -1,8 +1,14 @@
-@model blog2.ViewModels.PostViewModel
+@* @model blog2.ViewModels.PostViewModel
 
 <form asp-action="Write" asp-controller="Write" method="post" id="form">
+  <input hidden="true" asp-for="@Model.Edited">
+  <input hidden="true" asp-for="@Model.Id">
+  @* <input hidden="true" asp-for="@Model.Likes">
+  <input hidden="true" asp-for="@Model.Dislikes"> 
+  <input hidden="true" asp-for="@Model.Author">
+  <input hidden="true" asp-for="@Model.CreatedAt">
+  <input hidden="true" asp-for="@Model.ModifiedAt">
   <div class="container my-5">
-
     <div class="d-inline mx-2">
       <input asp-for="Content" id="content" hidden="true">
       <input asp-for="Title" id="post-title" class="bg-light border-0 w-75" placeholder="Title ...">
@@ -11,8 +17,22 @@
 
     <div id="editor">
     </div>
-
-    @* <div id="muallif"></div> *@
   </div>
+</form> *@
 
+
+@model blog2.ViewModels.PostViewModel
+
+<form asp-action="Write" asp-controller="Write" method="post" id="form">
+  <input hidden="true" asp-for="@Model.Edited">
+  <input hidden="true" asp-for="@Model.Id">
+  <div class="container my-5">
+    <div class="d-inline mx-2">
+      <input asp-for="Content" id="content" hidden="true">
+      <input asp-for="Title" id="post-title" class="bg-light border-0 w-75" placeholder="Title ...">
+      <button type="submit" class="btn btn-outline-secondary mr-auto">Publish</button>
+    </div>
+    <div id="editor">
+    </div>
+  </div>
 </form>

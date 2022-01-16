@@ -1,11 +1,9 @@
-using System.Reflection.Metadata;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using blog2.Models;
 using blog2.ViewModels;
 using blog2.Services;
 using blog2.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace blog2.Controllers;
 
@@ -13,10 +11,12 @@ public class WriteController : Controller
 {
     private readonly ILogger<WriteController> _logger;
     private readonly IBlogDbService _blogDbService;
-    public WriteController(IBlogDbService blogDbService, ILogger<WriteController> logger)
+    private readonly UserManager<User> _userM;
+    public WriteController(IBlogDbService blogDbService, ILogger<WriteController> logger, UserManager<User> userManager)
     {
         _blogDbService = blogDbService;
         _logger = logger;
+        _userM = userManager;
     }
 
     [Authorize]
@@ -30,7 +30,41 @@ public class WriteController : Controller
     [HttpPost("write")]
     public async Task<IActionResult> Write([FromForm]PostViewModel model)
     {
-        var newPost = new Post(model.Title, model.Content);
+        if(!ModelState.IsValid)
+        {
+            return BadRequest($"{ModelState.ErrorCount} errors detected");
+        }
+
+        if(model.Edited)
+        {
+            //here is the mistake
+            //GetPostByIdAsync(system.guid)
+            // but model has system.guid?
+            //so i changed the model
+            Guid s = model.Id != null? Guid.Parse(model.Id.ToString()): default(Guid);
+            var post = await _blogDbService.GetPostByIdAsync(s);
+            if(post.Title == model.Title && post.Content == model.Content)
+            {
+                return LocalRedirect($"~/post/{post.Id}");
+            }
+            post.ModifiedAt = DateTimeOffset.UtcNow;
+            post.Title = model.Title;
+            post.Content = model.Content;
+
+            var res = await _blogDbService.UpdatePostAsync(post);
+            if(res.IsSuccess)
+            {
+                return LocalRedirect($"~/post/{post.Id}");
+            }
+            return BadRequest(
+                new{
+                    error = res.Exception.Message,
+                    status = 401
+            });
+        }
+        
+        var userId = _userM.GetUserId(User);
+        var newPost = new Post(model.Title, model.Content, Guid.Parse(userId));
         var result = await _blogDbService.CreatePostAsync(newPost);
         if (result.IsSuccess)
         {
@@ -41,41 +75,31 @@ public class WriteController : Controller
             new {
             error = result.Exception.Message,
             status = 400
-        }
-        );
+        });
     }
 
 
-    // [HttpPost("edit")]
-    // public async Task<IActionResult> Edit(Blog blogEntity)
-    // {
-    //     var blogEntity1 = await _blogDbService.GetBlogByIdAsync(blogEntity.Id);
-    //     var result =await _blogDbService.UpdateBlogAsync(blogEntity1);
-    //     if (result.IsSuccess)
-    //     {
-    //         return LocalRedirect($"~/Blogs/{blogEntity.Id}");
-    //     }
-    //     return BadRequest(result.Exception.Message);
-    // }
-    // [HttpGet("edit")]
-    // public async Task<IActionResult> Edit()
-    // {
-    //     return View();
-    // }
+    [HttpGet("edit/{id}")]
+    public async Task<IActionResult> Edit(Guid id)
+    {
+        var post = await _blogDbService.GetPostByIdAsync(id);
+        var model = new PostViewModel()
+        {
+            Id = post.Id,
+            Edited = true,
+            Likes = post.Likes,
+            Dislikes = post.Dislikes,
+            Author = "author",
+            
+            Title = post.Title,
+            Content = post.Content,
+            
 
-    // [HttpGet("edit/{id}")]
-    // public async Task<IActionResult> Edit(Guid id)
-    // {
-    //     var blogEntity = await _blogDbService.GetBlogByIdAsync(id);
-    //     var result = await _blogDbService.DeleteBlogAsync(blogEntity);
-    //     if(result.IsSuccess)
-    //     {
-    //         return View("Write", blogEntity);
-    //     }
-    //     return BadRequest(
-    //         new {
-    //         error = result.Exception,
-    //         status = 400
-    //     });
-    // }
+            CreatedAt = post.CreatedAt,
+            ModifiedAt = post.ModifiedAt,       
+
+        };
+
+        return View("Write", model);
+    }
 }

@@ -1,16 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using blog2.Entities;
 
 namespace blog2.ViewModels;
 public class PostViewModel
 {
     public Guid? Id { get; set; } = default(Guid);
+    // public Guid Id { get; set; }
     
-    [Required]
-    [MaxLength(255)]
     public string Title { get; set; }
-    
-    [Required]
     public string Content { get; set; }
 
     public bool Edited { get; set; }
@@ -20,7 +18,15 @@ public class PostViewModel
 
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset ModifiedAt { get; set; }
-    // public string Author { get; set; }
+    public string Author { get; set; }
+}
+
+
+
     // public List<string> Tags { get; set; }
     // public List<string> Comments { get; set; }
-}
+
+    //when problem occures change the Write.cshtml hidden input
+    //for likes
+    //for disliked
+    //
