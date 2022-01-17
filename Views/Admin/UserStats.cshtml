@@ -1,0 +1,31 @@
+@model List<User>;
+@{
+  var a = 0;
+}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Fullname</th>
+      <th scope="col">Last</th>
+      <th scope="col">Email</th>
+      <th scope="col">Password</th>
+      <th scope="col">Option</th>
+    </tr>
+  </thead>
+  @foreach (var user in Model)
+  {
+    a += 1;
+    <tbody>
+      <tr>
+        <th scope="row">@a</th>
+        <td>@user.FullName</td>
+        <td>@user.UserName</td>
+        <td>@user.Email</td>
+        <td>@user.PasswordHash</td>
+        <td><a class="btn btn-outline-danger ms-auto mx-5 my-5" href="/DeleteUser/@user.Id">Delete</a></td>
+      </tr>
+    </tbody>
+  }
+</table>

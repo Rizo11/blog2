@@ -20,16 +20,18 @@ public class Post
     public ulong Dislikes { get; set; }
 
     public bool Edited => CreatedAt != ModifiedAt;
+    public string Tags { get; set; }
 
 
     [Obsolete("Not allowed", true)]
     public Post(){}
 
-    public Post(string title, string content, Guid createdBy)
+    public Post(string title, string content, Guid createdBy, string tags)
     {
         Title = title;
         Content = content;
         CreatedBy = createdBy;
+        Tags = tags;
 
         Id = Guid.NewGuid();
         CreatedAt = ModifiedAt = DateTimeOffset.UtcNow;

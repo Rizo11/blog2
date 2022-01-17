@@ -18,7 +18,11 @@ public class PostViewModel
 
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset ModifiedAt { get; set; }
+    public string Tags { get; set; }
     public string Author { get; set; }
+    public bool CanEdit { get; set; }
+    
+    
 }
 
 

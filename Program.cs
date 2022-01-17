@@ -1,3 +1,4 @@
+using blog2;
 using blog2.Data;
 using blog2.Entities;
 using blog2.Services;
@@ -24,6 +25,9 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IBlogDbService, BlogDbService>();
 builder.Services.AddEndpointsApiExplorer();
+
+//Seeding DataBase
+builder.Services.AddHostedService<SeedDb>();
 
 var app = builder.Build();
 

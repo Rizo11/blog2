@@ -16318,6 +16318,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Search/byTagTitle.cshtml",
+      "TargetPath": "Views\\Search\\byTagTitle.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Write/Write.cshtml",
       "TargetPath": "Views\\Write\\Write.cshtml",
       "FileKind": "mvc"
@@ -16333,13 +16338,28 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Search/byTag.cshtml",
+      "TargetPath": "Views\\Search\\byTag.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Home/Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Write/Error.cshtml",
+      "TargetPath": "Views\\Write\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Account/Register.cshtml",
       "TargetPath": "Views\\Account\\Register.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/MyPosts/MyPosts.cshtml",
+      "TargetPath": "Views\\MyPosts\\MyPosts.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -16360,6 +16380,11 @@
     {
       "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Shared/_SwitchPartial.cshtml",
       "TargetPath": "Views\\Shared\\_SwitchPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Admin/UserStats.cshtml",
+      "TargetPath": "Views\\Admin\\UserStats.cshtml",
       "FileKind": "mvc"
     },
     {

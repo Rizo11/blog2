@@ -1,16 +1,4 @@
-@model PostsViewModel
-
-@if (Model.Posts == null || Model.Posts.Count() < 1)
-{
-    <div class="alert alert-danger" role="alert">
-    <h4 class="alert-heading">No posts ☹️</h4>
-    <p>There are no posts yet. Please write one or come again some other time!</p>
-    <hr>
-    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
-</div>
-}
-else
-{
+@model PostsViewModel;
     <div class="row mx-4 mt-5">
     @foreach (var post in Model.Posts)
     {
@@ -22,11 +10,10 @@ else
                         {
                             foreach(var tag in post.Tags.Split(' ').ToList())
                             {
-                                <a asp-controller = "Search" asp-action="byTag" asp-route-id=@tag>
-                                    <span class="badge bg-info text-light mx-1">
-                                        @tag
-                                    </span>
+                                <a asp-action="byTag" asp-controller="Search" asp-route-id=@tag>
+                                    <span class="badge bg-info text-light mx-1">@tag </span>
                                 </a>
+
                             }
                         }
                     </div>
@@ -64,5 +51,3 @@ else
             </div>
         </div>
     }
-    </div>
-}

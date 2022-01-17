@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using blog2.Data;
 
@@ -11,9 +12,10 @@ using blog2.Data;
 namespace blog2.Migrations
 {
     [DbContext(typeof(BlogDb))]
-    partial class BlogDbModelSnapshot : ModelSnapshot
+    [Migration("20220116122021_9Create")]
+    partial class _9Create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

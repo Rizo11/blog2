@@ -57,11 +57,11 @@ public class BlogDbService : IBlogDbService
         }
     }
 
-    public async Task<(bool IsSuccess, Exception Exception)> DeletePostAsync(Post post)
+    public async Task<(bool IsSuccess, Exception Exception)> DeletePostAsync(Guid Id)
     {
         try
         {
-
+            var post = _dataBase.BlogsDb.FirstOrDefault(x => x.Id == Id);
             _dataBase.BlogsDb.Remove(post);
             await _dataBase.SaveChangesAsync();
             _logger.LogInformation($"Post {post.Id} was deleted succesfully...");
@@ -69,9 +69,13 @@ public class BlogDbService : IBlogDbService
         }
         catch (Exception e)
         {
-            _logger.LogError($"Error in deleting post, id={post.Id}...", e.Message);
+            _logger.LogError($"Error in deleting post, id={Id}...", e.Message);
 
             return (false, e);
         }
+    }
+    public List<Post> GetUserPosts(string userId)
+    {
+        return _dataBase.BlogsDb.Where(p => p.CreatedBy == Guid.Parse(userId)).ToList();
     }
 }

@@ -12,5 +12,6 @@ public interface IBlogDbService
     public Task<Post> GetPostByIdAsync(Guid id);
     public Task<(bool IsSuccess, Exception Exception)> CreatePostAsync(Post blog);
     public Task<(bool IsSuccess, Exception Exception)> UpdatePostAsync(Post blog);
-    public Task<(bool IsSuccess, Exception Exception)> DeletePostAsync(Post blog);
+    public Task<(bool IsSuccess, Exception Exception)> DeletePostAsync(Guid Id);
+    public List<Post> GetUserPosts(string userId);
 }

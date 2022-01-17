@@ -37,7 +37,8 @@ public class PostsController : Controller
                 Dislikes = p.Dislikes,
                 CreatedAt = p.CreatedAt,
                 ModifiedAt = p.ModifiedAt,
-                Author = p.CreatedBy.ToString()
+                Author = p.CreatedBy.ToString(),
+                Tags = p.Tags
             })
             .ToListAsync()
         });
@@ -62,7 +63,9 @@ public class PostsController : Controller
             Dislikes = post.Dislikes,
             CreatedAt = post.CreatedAt,
             ModifiedAt = post.ModifiedAt,
-            Author = post.CreatedBy.ToString()
+            Author = post.CreatedBy.ToString(),
+            Tags = post.Tags,
+            CanEdit = _userM.GetUserId(User) == post.CreatedBy.ToString()
         };
         return View(model);
     }
