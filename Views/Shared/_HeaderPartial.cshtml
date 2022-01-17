@@ -19,14 +19,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/myposts">MyPosts</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users">Admin</a>
-                    </li>
+                    @* @if(Model.Email == "admin@gmail.com")
+                    { *@
+                        <li class="nav-item">
+                            <a class="nav-link" href="/users">Admin</a>
+                        </li>
+                    @* } *@
                 </ul>
                 @using (Html.BeginForm("byTagTitle", "Search", FormMethod.Post))
                 {
                     @Html.TextBox("query")
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit"/>
                 } 
             </div>
         </div>

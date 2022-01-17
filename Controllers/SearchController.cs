@@ -41,7 +41,7 @@ public class SearchController: Controller
         return View(p);
     }
 
-    [HttpPost("{query}")]   
+    [HttpPost]   
     public IActionResult byTagTitle(string query)
     {
         var result = _blogDb.BlogsDb.Where(x => x.Tags.Contains(query)).ToList();
