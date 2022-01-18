@@ -37,7 +37,8 @@ public class MyPostsController: Controller
                 CreatedAt = p.CreatedAt,
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
-                Tags = p.Tags
+                Tags = p.Tags,
+                Accepted = p.Accepted
             }).ToList()
         };
 

@@ -1,0 +1,22 @@
+@model User;
+<div class="container mx-5 my-5 ms-auto">
+    <dl class="row">
+    <dt class="col-sm-3">Fullname</dt>
+    <dd class="col-sm-9">@Model.FullName</dd>
+
+    <dt class="col-sm-3">Username</dt>
+    <dd class="col-sm-9"> @Model.UserName </dd>
+
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+    </dl>
+    <a href="/myposts" class="btn btn-outline-success mx-5 my-5 ms-auto">My Posts</button>
+    @if(Model.UserName == "admin" && Model.Email == "admin@gmail.com")
+    {
+    <a href="/users" class="btn btn-outline-primary mx-5 my-5 ms-auto">All Users</a>
+    <a href="/lastposts" class="btn btn-outline-warning mx-5 my-5 ms-auto">Last 24h Posts</a>
+    }
+    <a href="/logout" class="btn btn-outline-danger mx-5 my-5 ms-auto">Log out</a>
+</div>
+<div class="list-group">
+</div>

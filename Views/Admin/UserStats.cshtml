@@ -2,15 +2,14 @@
 @{
   var a = 0;
 }
-
-<table class="table table-striped">
+<div class="container ms-auto my-5">
+<table class="table table-primary table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Fullname</th>
       <th scope="col">Last</th>
       <th scope="col">Email</th>
-      <th scope="col">Password</th>
       <th scope="col">Option</th>
     </tr>
   </thead>
@@ -23,9 +22,12 @@
         <td>@user.FullName</td>
         <td>@user.UserName</td>
         <td>@user.Email</td>
-        <td>@user.PasswordHash</td>
-        <td><a class="btn btn-outline-danger ms-auto mx-5 my-5" href="/DeleteUser/@user.Id">Delete</a></td>
+        <td>
+          <a class="btn btn-warning ms-auto mx-5 my-4" href="/">All Posts</a>
+          <a class="btn btn-danger ms-auto mx-5 my-4" href="/DeleteUser/@user.Id">Delete</a>
+        </td>
       </tr>
     </tbody>
   }
 </table>
+</div>

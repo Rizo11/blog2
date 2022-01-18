@@ -15,12 +15,24 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /home/mrizo/Desktop/dev/blog2
 build_property._RazorSourceGeneratorDebug = 
 
+[/home/mrizo/Desktop/dev/blog2/Views/Account/Account.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9BY2NvdW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/mrizo/Desktop/dev/blog2/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/mrizo/Desktop/dev/blog2/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mrizo/Desktop/dev/blog2/Views/Admin/Deny.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vRGVueS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mrizo/Desktop/dev/blog2/Views/Admin/UserPosts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vVXNlclBvc3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/mrizo/Desktop/dev/blog2/Views/Admin/UserStats.cshtml]
@@ -41,6 +53,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/home/mrizo/Desktop/dev/blog2/Views/Posts/GetAllPosts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUG9zdHMvR2V0QWxsUG9zdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/mrizo/Desktop/dev/blog2/Views/Posts/LastPosts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUG9zdHMvTGFzdFBvc3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/mrizo/Desktop/dev/blog2/Views/Posts/Post.cshtml]

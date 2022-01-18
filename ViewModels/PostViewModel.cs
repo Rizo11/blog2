@@ -7,7 +7,6 @@ public class PostViewModel
 {
     public Guid? Id { get; set; } = default(Guid);
     // public Guid Id { get; set; }
-    
     public string Title { get; set; }
     public string Content { get; set; }
 
@@ -21,8 +20,8 @@ public class PostViewModel
     public string Tags { get; set; }
     public string Author { get; set; }
     public bool CanEdit { get; set; }
-    
-    
+
+    public bool Accepted { get; set; } = true;
 }
 
 

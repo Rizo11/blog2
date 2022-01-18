@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using blog2.Entities;
 using blog2.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace blog2.Controllers;
 
@@ -25,6 +26,7 @@ public class PostsController : Controller
     [HttpGet("posts")]  
     public async Task<IActionResult> GetAllPosts()
     {
+
         return View(new PostsViewModel()
         {
             Posts = await _blogDb.BlogsDb.Select(p => new PostViewModel()
@@ -38,15 +40,11 @@ public class PostsController : Controller
                 CreatedAt = p.CreatedAt,
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
-                Tags = p.Tags
+                Tags = p.Tags,
+                Accepted = p.Accepted
             })
             .ToListAsync()
         });
-
-
-        // var posts =await _blogDbService.GetAllPostsAsync();
-        // PostsViewModel ret = await toPostsViewModelAsync(posts);
-        // return View(ret);
     }
 
     [HttpGet("post/{id}")]
@@ -65,8 +63,39 @@ public class PostsController : Controller
             ModifiedAt = post.ModifiedAt,
             Author = post.CreatedBy.ToString(),
             Tags = post.Tags,
-            CanEdit = _userM.GetUserId(User) == post.CreatedBy.ToString()
+            CanEdit = _userM.GetUserId(User) == post.CreatedBy.ToString(),
+            Accepted = post.Accepted
         };
+        return View(model);
+    }
+
+    [Authorize(Roles ="admin")]
+    [HttpGet("lastposts")]
+    public async Task<IActionResult> LastPosts()
+    {
+        var lastPosts = await _blogDb.BlogsDb.ToListAsync();
+        lastPosts = lastPosts.Where(p => (p.CreatedAt > DateTimeOffset.UtcNow.Add(new TimeSpan(-1,0,0,0)) && p.CreatedAt <= DateTimeOffset.UtcNow)).ToList(); 
+        lastPosts.AddRange(lastPosts.Where(p => (p.ModifiedAt > DateTimeOffset.UtcNow.Add(new TimeSpan(-1,0,0,0)) && p.ModifiedAt <= DateTimeOffset.UtcNow)).ToList()); 
+        
+        var model = new PostsViewModel()
+        {
+            Posts = lastPosts.Select(p => new PostViewModel()
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Content = p.Content,
+                Edited = p.Edited,
+                Likes = p.Likes,
+                Dislikes = p.Dislikes,
+                CreatedAt = p.CreatedAt,
+                ModifiedAt = p.ModifiedAt,
+                Author = p.CreatedBy.ToString(),
+                Tags = p.Tags,
+                CanEdit = _userM.GetUserId(User) == p.CreatedBy.ToString(),
+                Accepted = p.Accepted
+            }).ToList()
+        };
+
         return View(model);
     }
 

@@ -79,7 +79,7 @@ public class WriteController : Controller
         });
     }
 
-
+    [Authorize]
     [HttpGet("edit/{id}")]
     public async Task<IActionResult> Edit(Guid id)
     {
@@ -98,12 +98,13 @@ public class WriteController : Controller
 
             CreatedAt = post.CreatedAt,
             ModifiedAt = post.ModifiedAt,       
-
+            Accepted = post.Accepted
         };
 
         return View("Write", model);
     }
 
+    [Authorize]
     [HttpGet("delete/{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
@@ -130,7 +131,8 @@ public class WriteController : Controller
                 CreatedAt = p.CreatedAt,
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
-                Tags = p.Tags
+                Tags = p.Tags,
+                Accepted = p.Accepted
             }).ToList()
         };
 

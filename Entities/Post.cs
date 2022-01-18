@@ -22,6 +22,7 @@ public class Post
     public bool Edited => CreatedAt != ModifiedAt;
     public string Tags { get; set; }
 
+    public bool Accepted { get; set; }
 
     [Obsolete("Not allowed", true)]
     public Post(){}
@@ -37,5 +38,6 @@ public class Post
         CreatedAt = ModifiedAt = DateTimeOffset.UtcNow;
         Likes = 0;
         Dislikes = 0;
+        Accepted = true;    
     }
 }

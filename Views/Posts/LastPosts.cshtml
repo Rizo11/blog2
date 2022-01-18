@@ -1,0 +1,68 @@
+@model PostsViewModel
+
+@if (Model.Posts == null || Model.Posts.Count() < 1)
+{
+    <div class="col-md-6 mx-auto my-5 ms-auto">
+    <div class="alert alert-success text-center" role="alert">
+    <h4 class="alert-heading">😃 No last 24 hours posts 😃</h4>
+    <p>There are no new posts yet. Please come again some other time!</p>
+    </div>
+    </div>
+}
+else
+{
+    <div class="row mx-4 mt-5">
+    @foreach (var post in Model.Posts)
+    {
+        <div class="col-md-6">
+            <div class="row g-0 card rounded shadow overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <div class="d-flex">
+                        @if(post.Tags?.Split(' ').ToList().Count > 0)
+                        {
+                            foreach(var tag in post.Tags.Split(' ').ToList())
+                            {
+                                <a asp-controller = "Search" asp-action="byTag" asp-route-id=@tag>
+                                    <span class="badge bg-info text-light mx-1">
+                                        @tag
+                                    </span>
+                                </a>
+                            }
+                        }
+                    </div>
+                    <h3 class="mb-0">@post.Title</h3>
+                    <div class="d-flex">
+                        <div class="mb-1 text-muted">
+                            <i class="far fa-thumbs-up ms-auto"> CreatedAt: @post.CreatedAt.ToString("MMM dd, yyyy hh:mm")</i>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="mb-1 text-muted">
+                            <i class="far fa-thumbs-up ms-auto"> Author: @post.Author</i>
+                        </div>
+                    </div>
+                    @if(post.Edited)
+                    {
+                        <div class="d-flex">
+                            <div class="mb-1 text-muted">
+                                <i class="far fa-thumbs-up ms-auto"> Edited @post.ModifiedAt.ToString("MMM dd, yyyy hh:mm")</i>
+                            </div>
+                        </div>
+                    }
+                    <div class="d-flex">
+                        <i class="far fa-thumbs-up ms-auto"> Likes @post.Likes</i>
+                        <i class="far fa-thumbs-up ms-auto"> Dislikes @post.Likes</i>   
+                        <i class="far fa-thumbs-up ms-auto"> 
+                            <a href="/post/@post.Id" >Comments @post.Likes</a>
+                        </i>   
+                    </div>
+                    <a href="/post/@post.Id" >Read</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="~/DevPen.png" width="200" height="250">
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+}

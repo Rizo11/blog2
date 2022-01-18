@@ -22,7 +22,7 @@ public class SearchController: Controller
     [HttpGet("{id}")]
     public IActionResult byTag(string id)
     {
-        var result = _blogDb.BlogsDb.Where(x => x.Tags.Contains(id)).ToList();
+        var result = _blogDb.BlogsDb.Where(x => (x.Tags.Contains(id) && x.Accepted)).ToList();
         var p = new PostsViewModel(){
             Posts = result.Select(p => new PostViewModel()  
             {
@@ -44,7 +44,7 @@ public class SearchController: Controller
     [HttpPost]   
     public IActionResult byTagTitle(string query)
     {
-        var result = _blogDb.BlogsDb.Where(x => x.Tags.Contains(query)).ToList();
+        var result = _blogDb.BlogsDb.Where(x => (x.Tags.Contains(query) && x.Accepted)).ToList();
         var p = new PostsViewModel(){
             Posts = result.Select(p => new PostViewModel()  
             {
@@ -60,7 +60,7 @@ public class SearchController: Controller
                 Tags = p.Tags
             }).ToList()
         };
-        result = _blogDb.BlogsDb.Where(x => x.Title.Contains(query)).ToList();
+        result = _blogDb.BlogsDb.Where(x => (x.Title.Contains(query) && x.Accepted)).ToList();
         p.Posts.AddRange(
             result.Select(p => new PostViewModel()  
             {

@@ -1,6 +1,8 @@
+using System.Net;
 using System.Text.Json;
 using blog2.Entities;
 using blog2.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +43,7 @@ public class AccountController: Controller
         var result = await _userM.CreateAsync(user, model.Password);
         if(result.Succeeded)
         {
+            _userM.AddToRoleAsync(user, "writer");
             return LocalRedirect($"/account/login?returnUrl={model.ReturnUrl}");
         }
         return BadRequest(JsonSerializer.Serialize(result.Errors));
@@ -65,11 +68,18 @@ public class AccountController: Controller
 
         return BadRequest("Wrong credentials");
     }
+    [Authorize]
+    [HttpGet("account")]
+    public async Task<IActionResult> Account()
+    {
+        var user = await _userM.GetUserAsync(User);
+        return View(user);
+    }
 
-    // [HttpPost]
-    // public async Task<IActionResult> Logout()
-    // {
-    //     await _signInManager.SignOutAsync();
-    //     LocalRedirect("/");
-    // }
+    [HttpGet("logout")]
+    public async Task<IActionResult> Logout(string id)
+    {
+        await _signInManager.SignOutAsync();
+        return Redirect("/posts");
+    }
 }
