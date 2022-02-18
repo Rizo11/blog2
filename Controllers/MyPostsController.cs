@@ -24,7 +24,7 @@ public class MyPostsController: Controller
     public IActionResult MyPosts()
     {
         var userId = _userM.GetUserId(User);
-        var result = _blogDb.BlogsDb.Where(p => p.CreatedBy == Guid.Parse(userId));
+        var result = _blogDb.BlogsDb.Where(p => (p.CreatedBy == Guid.Parse(userId) && (p.Status == EPostStatus.Accepted || p.Status == EPostStatus.Written || p.Status == EPostStatus.Denied)));
         var posts = new PostsViewModel(){
             Posts = result.Select(p => new PostViewModel()  
             {
@@ -38,7 +38,7 @@ public class MyPostsController: Controller
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
                 Tags = p.Tags,
-                Accepted = p.Accepted
+                Status = p.Status
             }).ToList()
         };
 

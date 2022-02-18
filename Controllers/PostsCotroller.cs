@@ -26,10 +26,11 @@ public class PostsController : Controller
     [HttpGet("posts")]  
     public async Task<IActionResult> GetAllPosts()
     {
+        var posts = await _blogDb.BlogsDb.Where(p => (p.Status == EPostStatus.Written || p.Status == EPostStatus.Accepted)).ToListAsync();
 
         return View(new PostsViewModel()
         {
-            Posts = await _blogDb.BlogsDb.Select(p => new PostViewModel()
+            Posts = posts.Select(p => new PostViewModel()
             {
                 Id = p.Id,
                 Title = p.Title,
@@ -41,9 +42,8 @@ public class PostsController : Controller
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
                 Tags = p.Tags,
-                Accepted = p.Accepted
-            })
-            .ToListAsync()
+                Status = p.Status
+            }).ToList()
         });
     }
 
@@ -64,7 +64,7 @@ public class PostsController : Controller
             Author = post.CreatedBy.ToString(),
             Tags = post.Tags,
             CanEdit = _userM.GetUserId(User) == post.CreatedBy.ToString(),
-            Accepted = post.Accepted
+            Status = post.Status
         };
         return View(model);
     }
@@ -74,9 +74,7 @@ public class PostsController : Controller
     public async Task<IActionResult> LastPosts()
     {
         var lastPosts = await _blogDb.BlogsDb.ToListAsync();
-        lastPosts = lastPosts.Where(p => (p.CreatedAt > DateTimeOffset.UtcNow.Add(new TimeSpan(-1,0,0,0)) && p.CreatedAt <= DateTimeOffset.UtcNow)).ToList(); 
-        lastPosts.AddRange(lastPosts.Where(p => (p.ModifiedAt > DateTimeOffset.UtcNow.Add(new TimeSpan(-1,0,0,0)) && p.ModifiedAt <= DateTimeOffset.UtcNow)).ToList()); 
-        
+        lastPosts = lastPosts.Where(p => p.Status == EPostStatus.Written).ToList();
         var model = new PostsViewModel()
         {
             Posts = lastPosts.Select(p => new PostViewModel()
@@ -92,7 +90,7 @@ public class PostsController : Controller
                 Author = p.CreatedBy.ToString(),
                 Tags = p.Tags,
                 CanEdit = _userM.GetUserId(User) == p.CreatedBy.ToString(),
-                Accepted = p.Accepted
+                Status = p.Status
             }).ToList()
         };
 

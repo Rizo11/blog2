@@ -51,12 +51,14 @@ public class WriteController : Controller
             post.Title = model.Title;
             post.Content = model.Content;
             post.Tags = model.Tags;
-
+            post.Status = EPostStatus.Written;
             var res = await _blogDbService.UpdatePostAsync(post);
             if(res.IsSuccess)
             {
+                _logger.LogWarning($"{post.Id} was edit {post.Status}");
                 return LocalRedirect($"~/post/{post.Id}");
             }
+            _logger.LogWarning($"{post.Id} FAILED to edit {post.Status}");
             return BadRequest(
                 new{
                     error = res.Exception.Message,
@@ -65,7 +67,7 @@ public class WriteController : Controller
         }
         
         var userId = _userM.GetUserId(User);
-        var newPost = new Post(model.Title, model.Content, Guid.Parse(userId), model.Tags);
+        var newPost = new Post(model.Title, model.Content, Guid.Parse(userId), model.Tags, EPostStatus.Written);
         var result = await _blogDbService.CreatePostAsync(newPost);
         if (result.IsSuccess)
         {
@@ -98,7 +100,7 @@ public class WriteController : Controller
 
             CreatedAt = post.CreatedAt,
             ModifiedAt = post.ModifiedAt,       
-            Accepted = post.Accepted
+            Status = post.Status
         };
 
         return View("Write", model);
@@ -132,7 +134,7 @@ public class WriteController : Controller
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
                 Tags = p.Tags,
-                Accepted = p.Accepted
+                Status = p.Status
             }).ToList()
         };
 

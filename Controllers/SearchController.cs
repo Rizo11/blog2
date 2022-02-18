@@ -22,7 +22,7 @@ public class SearchController: Controller
     [HttpGet("{id}")]
     public IActionResult byTag(string id)
     {
-        var result = _blogDb.BlogsDb.Where(x => (x.Tags.Contains(id) && x.Accepted)).ToList();
+        var result = _blogDb.BlogsDb.Where(x => (x.Tags.Contains(id) && (x.Status == EPostStatus.Written || x.Status == EPostStatus.Accepted) )).ToList();
         var p = new PostsViewModel(){
             Posts = result.Select(p => new PostViewModel()  
             {
@@ -35,7 +35,8 @@ public class SearchController: Controller
                 CreatedAt = p.CreatedAt,
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
-                Tags = p.Tags
+                Tags = p.Tags,
+                Status = p.Status
             }).ToList()
         };
         return View(p);
@@ -44,7 +45,7 @@ public class SearchController: Controller
     [HttpPost]   
     public IActionResult byTagTitle(string query)
     {
-        var result = _blogDb.BlogsDb.Where(x => (x.Tags.Contains(query) && x.Accepted)).ToList();
+        var result = _blogDb.BlogsDb.Where(x => (x.Tags.Contains(query) && (x.Status == EPostStatus.Written || x.Status == EPostStatus.Accepted))).ToList();
         var p = new PostsViewModel(){
             Posts = result.Select(p => new PostViewModel()  
             {
@@ -57,10 +58,11 @@ public class SearchController: Controller
                 CreatedAt = p.CreatedAt,
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
-                Tags = p.Tags
+                Tags = p.Tags,
+                Status = p.Status
             }).ToList()
         };
-        result = _blogDb.BlogsDb.Where(x => (x.Title.Contains(query) && x.Accepted)).ToList();
+        result = _blogDb.BlogsDb.Where(x => (x.Title.Contains(query) && (x.Status == EPostStatus.Written || x.Status == EPostStatus.Accepted))).ToList();
         p.Posts.AddRange(
             result.Select(p => new PostViewModel()  
             {
@@ -73,7 +75,8 @@ public class SearchController: Controller
                 CreatedAt = p.CreatedAt,
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
-                Tags = p.Tags
+                Tags = p.Tags,
+                Status = p.Status
             }).ToList()
         );
         return View(p);

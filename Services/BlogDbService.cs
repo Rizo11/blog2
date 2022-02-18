@@ -61,8 +61,11 @@ public class BlogDbService : IBlogDbService
     {
         try
         {
-            var post = _dataBase.BlogsDb.FirstOrDefault(x => x.Id == Id);
-            _dataBase.BlogsDb.Remove(post);
+            var post = await _dataBase.BlogsDb.FirstOrDefaultAsync(x => x.Id == Id);
+            post.Status = EPostStatus.Deleted;
+
+            _dataBase.BlogsDb.Update(post);
+
             await _dataBase.SaveChangesAsync();
             _logger.LogInformation($"Post {post.Id} was deleted succesfully...");
             return (true, null);

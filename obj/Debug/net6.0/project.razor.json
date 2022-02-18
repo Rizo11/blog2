@@ -16353,6 +16353,16 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Admin/AllAccepted.cshtml",
+      "TargetPath": "Views\\Admin\\AllAccepted.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Admin/Accept.cshtml",
+      "TargetPath": "Views\\Admin\\Accept.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Admin/UserPosts.cshtml",
       "TargetPath": "Views\\Admin\\UserPosts.cshtml",
       "FileKind": "mvc"
@@ -16378,6 +16388,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Admin/AllDenied.cshtml",
+      "TargetPath": "Views\\Admin\\AllDenied.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Posts/Post.cshtml",
       "TargetPath": "Views\\Posts\\Post.cshtml",
       "FileKind": "mvc"
@@ -16390,6 +16405,11 @@
     {
       "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Shared/_SwitchPartial.cshtml",
       "TargetPath": "Views\\Shared\\_SwitchPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/mrizo/Desktop/dev/blog2/Views/Admin/AllDeleted.cshtml",
+      "TargetPath": "Views\\Admin\\AllDeleted.cshtml",
       "FileKind": "mvc"
     },
     {

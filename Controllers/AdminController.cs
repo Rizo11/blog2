@@ -58,28 +58,72 @@ public class AdminController: Controller
                 ModifiedAt = p.ModifiedAt,
                 Author = p.CreatedBy.ToString(),
                 Tags = p.Tags,
-                Accepted = p.Accepted
+                Status = p.Status
             }).ToList()
         };
         return View(posts);
     }
 
     [Authorize(Roles ="admin")]
-    [HttpPost("deny/{id}")]
+    [HttpGet("deny/{id}")]
     public async Task<IActionResult> Deny(Guid id)
     {
         var post = await _blogDb.BlogsDb.FirstOrDefaultAsync(p => p.Id == id);
-        post.Accepted = false;
+        post.Status = EPostStatus.Denied;
         try
         {
             _blogDb.BlogsDb.Update(post);
             await _blogDb.SaveChangesAsync();
-            _logger.LogInformation($"Post {post.Id} was updated succesfully...");
+            _logger.LogInformation($"Post {post.Id} was updated succesfully...DENIED");
         }
         catch (Exception e)
         {
-            _logger.LogError($"Error in updating post, id={post.Id}...{e.Message}");
+            _logger.LogError($"Error in updating post, id={post.Id}...{e.Message} DENIED");
         }
+        return View(post);
+    }
+
+    [Authorize(Roles ="admin")]
+    [HttpGet("accept/{id}")]
+    public async Task<IActionResult> Accept(Guid id)
+    {
+        var post = await _blogDb.BlogsDb.FirstOrDefaultAsync(p => p.Id == id);
+        post.Status = EPostStatus.Accepted;
+        try
+        {
+            _blogDb.BlogsDb.Update(post);
+            await _blogDb.SaveChangesAsync();
+            _logger.LogInformation($"Post {post.Id} was updated succesfully...ACCEPTED");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"Error in updating post, id={post.Id}...{e.Message} ACCEPTED");
+        }
+        return View(post);
+    }
+
+    [Authorize(Roles ="admin")]
+    [HttpGet("allaccepted")]
+    public async Task<IActionResult> AllAccepted(Guid id)
+    {
+        var post = await _blogDb.BlogsDb.Where(p => p.Status == EPostStatus.Accepted).ToListAsync();
+        return View(post);
+    }
+
+    [Authorize(Roles ="admin")]
+    [HttpGet("alldenied")]
+    public async Task<IActionResult> AllDenied(Guid id)
+    {
+        var post = await _blogDb.BlogsDb.Where(p => p.Status == EPostStatus.Denied).ToListAsync();
+
+        return View(post);
+    }
+
+    [Authorize(Roles ="admin")]
+    [HttpGet("alldeleted")]
+    public async Task<IActionResult> AllDeleted(Guid id)
+    {
+        var post = await _blogDb.BlogsDb.Where(p => p.Status == EPostStatus.Deleted).ToListAsync();
         return View(post);
     }
 }

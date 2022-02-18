@@ -22,12 +22,12 @@ public class Post
     public bool Edited => CreatedAt != ModifiedAt;
     public string Tags { get; set; }
 
-    public bool Accepted { get; set; }
+    public EPostStatus Status { get; set; }
 
     [Obsolete("Not allowed", true)]
     public Post(){}
 
-    public Post(string title, string content, Guid createdBy, string tags)
+    public Post(string title, string content, Guid createdBy, string tags, EPostStatus status)
     {
         Title = title;
         Content = content;
@@ -38,6 +38,6 @@ public class Post
         CreatedAt = ModifiedAt = DateTimeOffset.UtcNow;
         Likes = 0;
         Dislikes = 0;
-        Accepted = true;    
+        Status = status;
     }
 }

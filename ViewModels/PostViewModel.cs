@@ -21,7 +21,7 @@ public class PostViewModel
     public string Author { get; set; }
     public bool CanEdit { get; set; }
 
-    public bool Accepted { get; set; } = true;
+    public EPostStatus Status { get; set; }
 }
 
 

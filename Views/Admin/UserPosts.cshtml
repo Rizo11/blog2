@@ -2,17 +2,23 @@
 
 @if (Model.Posts == null || Model.Posts.Count() < 1)
 {
-    <div class="alert alert-danger" role="alert">
-    <h4 class="alert-heading">He does not have any posts ☹️</h4>
-    <p>There are no posts yet for this user. Please come again some other time!</p>
-    <hr>
-    <a class="btn btn-danger ms-auto mx-5 my-4" href="/users">Back</a>
-
-</div>
+    <div class="card text-red bg-default mx-5 my-5" style="max-width: 25rem;">
+    <div class="card-header">
+        NO POSTS ☹️
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">This user has never written any posts</h5>
+        <p class="card-text">Please come again some other time!</p>
+        <a href="/users" class="btn btn-primary">Go Back</a>
+    </div>
+    </div>
 }
 else
 {
     <div class="row mx-4 mt-5">
+        <div class="container">
+        <a class="btn btn-primary ms-auto my-4" href="/users">Back</a>
+    </div>
     @foreach (var post in Model.Posts)
     {
         <div class="col-md-6">
@@ -50,6 +56,38 @@ else
                             </div>
                         </div>
                     }
+                    @if(post.Status == EPostStatus.Denied)
+                    {
+                        <div class="d-flex">
+                            <div class="mb-1 text-muted">
+                                <i class="far fa-thumbs-up ms-auto text-warning">Denied</i>
+                            </div>
+                        </div>
+                    }
+                    else if(post.Status == EPostStatus.Deleted)
+                    {
+                        <div class="d-flex">
+                            <div class="mb-1 text-muted">
+                                <i class="far fa-thumbs-up ms-auto text-danger">Deleted</i>
+                            </div>
+                        </div>
+                    }
+                    else if(post.Status == EPostStatus.Accepted)
+                    {
+                        <div class="d-flex">
+                            <div class="mb-1 text-muted">
+                                <i class="far fa-thumbs-up ms-auto text-primary">Accepted</i>
+                            </div>
+                        </div>
+                    }
+                    else if(post.Status == EPostStatus.Written)
+                    {
+                        <div class="d-flex">
+                            <div class="mb-1 text-muted">
+                                <i class="far fa-thumbs-up ms-auto text-success">Written</i>
+                            </div>
+                        </div>
+                    }
                     <div class="d-flex">
                         <i class="far fa-thumbs-up ms-auto"> Likes @post.Likes</i>
                         <i class="far fa-thumbs-up ms-auto"> Dislikes @post.Likes</i>   
@@ -59,19 +97,17 @@ else
                     </div>
                 </div>
 
-                <div class="col-auto d-none d-lg-block">
-                    <a class="btn btn-danger ms-auto mx-5 my-4" href="/deny/@post.Id">Deny</a>
-                    <a class="btn btn-danger ms-auto mx-5 my-4" href="/post/@post.Id">Read</a>
+                <div class="col-auto">
+                    <a class="btn btn-outline-primary ms-auto mx-5 my-4" href="/accept/@post.Id">Accept</a>
+                    <a class="btn btn-outline-danger ms-auto mx-5 my-4" href="/deny/@post.Id">Deny</a>
+                    <a class="btn btn-outline-success ms-auto mx-5 my-4" href="/post/@post.Id">Read</a>
                 </div>
 
-                <div class="col-auto d-none d-lg-block">
+                <div class="col-auto">
                     <img src="~/DevPen.png" width="200" height="250">
                 </div>
             </div>
         </div>
     }
-    <div class="col-auto d-none d-lg-block">
-        <a class="btn btn-danger ms-auto mx-5 my-4" href="/users">Back</a>
-    </div>
     </div>
 }

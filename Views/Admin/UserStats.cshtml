@@ -3,6 +3,10 @@
   var a = 0;
 }
 <div class="container ms-auto my-5">
+  <div class="row mx-4 mt-5">
+      <div class="container">
+      <a class="btn btn-primary ms-auto my-4" href="/account">Back</a>
+  </div>
 <table class="table table-primary table-striped">
   <thead>
     <tr>
@@ -23,7 +27,7 @@
         <td>@user.UserName</td>
         <td>@user.Email</td>
         <td>
-          <a class="btn btn-warning ms-auto mx-5 my-4" href="/">All Posts</a>
+          <a class="btn btn-warning ms-auto mx-5 my-4" href="/userposts/@user.Id">All Posts</a>
           <a class="btn btn-danger ms-auto mx-5 my-4" href="/DeleteUser/@user.Id">Delete</a>
         </td>
       </tr>
